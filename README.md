@@ -1,1 +1,128 @@
 ## ZTE-C300 Configuration
+
+Untuk Mikrotik di colok ke 10/100 untuk remote OLT.
+Mikrotik yg mengarah ke 10/100 tersebut diberi IP 136.1.1.1/24 lalu coba ping ke 136.1.1.100 ( ip OLT )
+
+Agar dapat terhubung dengan Netnumen maka OLT harus disetting sebagai berikut ( telnet ke 136.1.1.100 dan paste config dibawah ini )
+
+############## Config agar OLT dapat diremote ###########
+conf t
+line telnet idle-timeout 1000
+snmp-server community public view allview rw
+snmp-server host 136.1.1.100 trap version 2c public enable NOTIFICATIONS server-index 1 udp-port 162
+snmp-server enable trap
+ip route 0.0.0.0 0.0.0.0 136.1.1.1
+end
+write
+
+############## END Config  ###########
+
+
+
+############## Dijalankan jika habis direset ##############
+
+
+conf t
+
+
+line telnet idle-timeout 1000
+snmp-server community public view allview rw
+snmp-server host 136.1.1.100 trap version 2c public enable NOTIFICATIONS server-index 1 udp-port 162
+snmp-server enable trap
+ip route 0.0.0.0 0.0.0.0 136.1.1.1
+add-rack rackno 1 racktype C320Rack
+add-shelf shelfno 1 shelftype C320_SHELF
+add-card slotno 3 PRAM
+add-card slotno 1 GTGO
+add-subcard slotno 4 subcardno 1 UCDC/1
+set-pnp enable
+fan control temp_level 30 35 40 50
+fan high-threshold 65
+gpon
+  profile tcont 100M type 1 fixed 100000
+  profile traffic UP100M sir 100000 pir 120000
+  profile traffic DW100M sir 100000 pir 120000
+exit
+gpon
+  onu profile vlan PPPoE tag-mode tag cvlan 600
+  onu profile vlan HOTSPOT tag-mode tag cvlan 500
+exit
+pon
+onu-type ZTE-F660 gpon description 4ETH,2POTS,WIFI service-mgmt-via-non-omci wifi enable
+onu-type ZTE-F660 gpon max-tcont 7 max-gemport 32 max-switch-perslot 8 max-flow-perswitch 32 max-iphost 5
+onu-type-if ZTE-F660 eth_0/1-4
+onu-type-if ZTE-F660 pots_0/1-2
+onu-type-if ZTE-F660 wifi_0/1-4
+onu-type ZTE-F609 gpon description 4ETH,2POTS,WIFI service-mgmt-via-non-omci wifi enable
+onu-type ZTE-F609 gpon max-tcont 7 max-gemport 32 max-switch-perslot 8 max-flow-perswitch 32 max-iphost 5
+onu-type-if ZTE-F609 eth_0/1-4
+onu-type-if ZTE-F609 pots_0/1-2
+onu-type-if ZTE-F609 wifi_0/1-4
+exit
+interface gei_1/4/3
+switchport mode trunk
+switchport vlan 600 tag
+exit
+
+
+####### Untuk melihat rack
+
+
+show rack
+show shelf
+show card
+show subcard
+show running-config
+show gpon onu uncfg
+show gpon onu state
+
+
+############ Untuk mengadopsi / meregister modem yg baru dipasang
+
+
+show gpon onu uncfg #
+interface gpon-olt_1/1/1
+onu 1 type ZTE-F609 sn ZTEGC86CCB88
+exit
+
+
+interface gpon-onu_1/1/1:1
+  name PEMDA
+  description 1$$PEMDA$$
+  sn-bind enable sn
+  tcont 1 name HSI profile 100M
+  tcont 2 name HOT profile 100M
+  gemport 1 name HSI unicast tcont 1 dir both
+  gemport 1 traffic-limit upstream UP100M downstream DW100M
+  gemport 2 name HOT unicast tcont 2 dir both
+  gemport 2 traffic-limit upstream UP100M downstream DW100M
+  switchport mode hybrid vport 1
+  switchport mode hybrid vport 2
+  service-port 1 vport 1 user-vlan 600 vlan 600
+  service-port 2 vport 2 user-vlan 500 vlan 500
+  pppoe-plus enable sport 1
+  pppoe-plus trust true replace sport 1
+exit
+
+
+pon-onu-mng gpon-onu_1/1/1:1
+  service HSI type internet gemport 1 cos 0 vlan 600
+  service HOT type internet gemport 2 cos 0 vlan 500
+  wan-ip 1 mode pppoe username testing123@babel password 123456 vlan-profile PPPoE host 1
+  wan-ip 1 ping-response enable traceroute-response enable
+  interface wifi wifi_0/1 state lock
+  interface wifi wifi_0/4 state lock
+  wifi enable channel 1
+  ssid auth wep wifi_0/1 open-system
+  ssid auth wep wifi_0/2 open-system
+  ssid auth wep wifi_0/3 open-system
+  ssid auth wep wifi_0/4 open-system
+  ssid ctrl wifi_0/1 name 1
+  ssid ctrl wifi_0/2 name My-WIFI
+  ssid ctrl wifi_0/3 name HOTSPOTKU
+  ssid ctrl wifi_0/4 name 2
+  wan 1 ethuni 1,2,3 ssid 2 service internet host 1
+  vlan port eth_0/4 mode tag vlan 500
+  vlan port wifi_0/3 mode tag vlan 500
+  dhcp-ip ethuni eth_0/4 from-internet
+exit
