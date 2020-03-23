@@ -1,0 +1,39 @@
+## cek onu belum terdaftar
+ZTE C300 # show gpon onu uncfg
+interface gpon-olt_1/9/1
+onu 1 type ZTE-F609 sn ZTEGC86CCB88
+exit
+
+## Config interface onu yang baru
+interface gpon-onu_1/9/1:1
+  name NAME
+  description DESCRIPTION
+  sn-bind enable sn
+  tcont 1 name HSI profile 100M
+  tcont 2 name HOT profile 100M
+  gemport 1 name HSI unicast tcont 1 dir both
+  gemport 1 traffic-limit upstream UP100M downstream DW100M
+  gemport 2 name HOT unicast tcont 2 dir both
+  gemport 2 traffic-limit upstream UP100M downstream DW100M
+  switchport mode hybrid vport 1
+  switchport mode hybrid vport 2
+  service-port 1 vport 1 user-vlan 1200 vlan 1200
+  pppoe-plus enable sport 1
+  pppoe-plus trust true replace sport 1
+exit
+
+## config onu
+pon-onu-mng gpon-onu_1/9/1:1
+  service HSI type internet gemport 1 cos 0 vlan 1200
+  wan-ip 1 mode pppoe username PPPoE_USERNAME password PPPoeE_PASSWORD vlan-profile PPPoE host 1
+  wan-ip 1 ping-response enable traceroute-response enable
+  interface wifi wifi_0/1 state unlock
+  interface wifi wifi_0/4 state lock
+  wifi enable channel 1
+  ssid auth wep wifi_0/1 open-system
+  ssid auth wep wifi_0/2 open-system
+  ssid auth wep wifi_0/3 open-system
+  ssid auth wep wifi_0/4 open-system
+  wan 1 ethuni 1,2,3 ssid 1 service internet host 1
+  dhcp-ip ethuni eth_0/4 from-internet
+exit
