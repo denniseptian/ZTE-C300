@@ -1,12 +1,12 @@
-## ZTE-C300 Configuration
+#### ZTE-C300 Configuration
 
 Untuk Mikrotik di colok ke 10/100 untuk remote OLT.
 Mikrotik yg mengarah ke 10/100 tersebut diberi IP 136.1.1.1/24 lalu coba ping ke 136.1.1.100 ( ip OLT )
 
 Agar dapat terhubung dengan Netnumen maka OLT harus disetting sebagai berikut ( telnet ke 136.1.1.100 dan paste config dibawah ini )
 
-############## Config agar OLT dapat diremote ###########
-conf t
+#### Config agar OLT dapat diremote
+> conf t
 line telnet idle-timeout 1000
 snmp-server community public view allview rw
 snmp-server host 136.1.1.100 trap version 2c public enable NOTIFICATIONS server-index 1 udp-port 162
@@ -15,16 +15,10 @@ ip route 0.0.0.0 0.0.0.0 136.1.1.1
 end
 write
 
-############## END Config  ###########
-
-
-
-############## Dijalankan jika habis direset ##############
+### Dijalankan jika habis direset
 
 
 conf t
-
-
 line telnet idle-timeout 1000
 snmp-server community public view allview rw
 snmp-server host 136.1.1.100 trap version 2c public enable NOTIFICATIONS server-index 1 udp-port 162
@@ -65,7 +59,7 @@ switchport vlan 600 tag
 exit
 
 
-####### Untuk melihat rack
+#### Untuk melihat rack
 
 
 show rack
@@ -77,7 +71,7 @@ show gpon onu uncfg
 show gpon onu state
 
 
-############ Untuk mengadopsi / meregister modem yg baru dipasang
+#### Untuk mengadopsi / meregister modem yg baru dipasang
 
 
 show gpon onu uncfg #
