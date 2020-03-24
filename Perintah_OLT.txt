@@ -180,3 +180,393 @@ pon-onu-mng gpon-onu_1/2/11:8
   service Internet-Customer2 gemport 3 vlan 1490
   vlan port eth_0/1 mode tag vlan 671
   vlan port eth_0/3 mode tag vlan 1490
+
+CHECKING OLT UPTIME
+OL01#show system-group
+System Description: ZX Version V4.
+Started before: 47484 days, 5 hours, 25 minutes
+OL01#
+
+CHECKING OLT BOARD
+GTGOE = 8 Port (O = Octal)
+
+GTGH = 16 Port (H = Hexa)
+
+OL01#sho card
+Rack Shelf Slot CfgType RealType Port    HardVer SoftVer         Status
+——————————————————————————-
+1    1     0    PRWG    PRWG     N/A                             INSERVICE
+1    1     1    PRWG    PRWG     N/A                             INSERVICE
+1    1     2    GTGO    GTGOE    8       110301  V1.      INSERVICE
+1    1     3    GTGH    GTGHG    16      120700  V1.       INSERVICE
+1    1     4    GTGO    GTGOE    8       110301  V1.2     INSERVICE
+1    1     5    GTGO    GTGOE    8       110301  V1.2     INSERVICE
+1    1     6    GTGO    GTGOE    8       110301  V1      INSERVICE
+1    1     7    GTGO    GTGOE    8       110301  V1.     INSERVICE
+1    1     8    GTGO    GTGOE    8       110301  V1        INSERVICE
+1    1     9    GTGO    GTGOE    8       110301  V1.       INSERVICE
+1    1     10   SCXN    SCXN     N/A     120902  V1.        STANDBY      –> Control Module
+1    1     11   SCXN    SCXN     N/A     120902  V1.        INSERVICE    –> Control Module
+1    1     12   GTGO    GTGOE    8       110301  V1.       INSERVICE
+1    1     13   GTGO    GTGOE    8       110301  V1.      INSERVICE
+1    1     14   GTGO    GTGOE    8       110301  V1.        INSERVICE
+1    1     15   GTGO    GTGOE    8       110301  V1.       INSERVICE
+1    1     16   GTGO    GTGOE    8       110301  V1.        INSERVICE
+1    1     17   GTGO    GTGOE    8       110301  V1.       INSERVICE
+1    1     18   GTGO    GTGOE    8       110301  V1.       INSERVICE
+1    1     19   GTGO    GTGOE    8       110301  V1.       INSERVICE
+1    1     21   HUTQ    HUTQ     4       100101  V1.       INSERVICE    –> Uplink Module
+1    1     22   HUTQ    HUTQ     4       100101  V1.       INSERVICE    –> Uplink Module
+OL01#
+
+CHECKING OLT PROCESSOR AND MEMORY
+OL01#show processor
+Rack   Shelf    Slot   CPU(5s)   CPU(1m)    CPU(5m)   PhyMem(MB)  Memory
+——————————————————————————-
+1       1       2       14%       13%       13%       256         55%
+1       1       3       19%       21%       21%       1024        16%
+1       1       4       14%       12%       12%       256         55%
+1       1       5       10%       9%        10%       256         55%
+1       1       6       11%       11%       11%       256         55%
+1       1       7       9%        11%       11%       256         55%
+1       1       8       11%       10%       10%       256         55%
+1       1       9       10%       9%        10%       256         55%
+1       1       10      1%        1%        1%        1024        26%
+1       1       11      2%        1%        1%        1024        27%
+1       1       12      11%       10%       10%       256         55%
+1       1       13      9%        10%       10%       256         55%
+1       1       14      9%        11%       11%       256         55%
+1       1       15      9%        11%       11%       256         55%
+1       1       16      9%        11%       11%       256         55%
+1       1       17      12%       11%       11%       256         55%
+1       1       18      9%        11%       11%       256         55%
+1       1       19      12%       11%       11%       256         55%
+1       1       21      13%       12%       12%       32          21%
+1       1       22      13%       12%       12%       32          21%
+OL01#
+
+CHECKING OLT TEMPERATURE
+OL01#show temperature
+Card Temperature:
+——————————————-
+Slot   Temperature(Celsius scale)
+——————————————-
+0         N/A.
+1         N/A.
+2         35
+3         32
+4         33
+5         35
+6         36
+7         35
+8         34
+9         37
+10        20
+11        20
+12        34
+13        35
+14        36
+15        36
+16        35
+17        35
+18        35
+19        32
+20        N/A.
+21        N/A.
+22        N/A.
+——————————————-
+OL01#
+
+CHECKING OLT PER SLOT
+OL01#show card slotno 12
+Config-Type   : GTGO      Status              : INSERVICE
+Real-Type     : GTGOE     Serial-Number       : 272
+Port-Number   : 8         BootROM-VER         : V1.2.024 14:17:00
+PCB-VER       : 11   Software-VER        : V1.2.:52:53
+Cpld-VER      : V1
+Phy-Mem-Size  : 256MB     Main-CPU            : PowerPC Processor
+Cpu-Usage     : 10%       Cpu-Alarm-Threshold : 100%
+Mem-Usage     : 55%       Mem-Alarm-Threshold : 100%
+Uptime        : 259 Day , 11 Hours , 16 Minutes , 57 Second
+OL01#
+
+FINDING ONT BY SN NUMBER
+OL01#sho gpon onu by sn ABCDEFGHIJ
+SearchResult
+—————–
+gpon-onu_1/4/1:2
+OL01#
+
+CHECKING ONT STATUS
+OL01#sho gpon onu sta gpon-olt_1/4/1 2
+OnuIndex               Admin State  OMCC State   O7 State     Phase State
+—————————————————————————-
+gpon-onu_1/4/1:2       enable       enable       operation    working      –> modem normal
+ONU Number: 1/1
+OL01#
+
+CHECKING ONT UPTIME AND ONT HISTORY LOGS
+OL01#sho gpon onu detail-info gpon-onu_1/4/1:2
+
+ONU interface:         gpon-onu_1/4/1:2
+Name:                ONU-1:2
+Type:                ZTEG-F660 –> ONT type 4 ports
+State:               ready
+Admin state:         enable
+Phase state:         working
+Authentication mode: sn
+SN Bind:             enable with SN check
+Serial number:       ABCDEFGHIJ
+Password:
+Device ID:
+Description:         IRONMAN
+Vport mode:          gemport
+DBA Mode:            Hybrid
+ONU Status:          enable
+OMCI BW Profile:     enable
+Line Profile:        N/A
+Service Profile:     N/A
+Alarm Profile:       N/A
+Performance Profile: N/A
+ONU Distance:        2510m
+Online Duration:     17h 28m 14s –> Online Duration
+FEC:                 none
+——————————————
+Authpass Time          OfflineTime             Cause
+1   2016-12-31 16:16:25    2017-01-04 03:34:37     DyingGasp –> ont Off
+2   2017-01-04 03:35:51    2017-01-04 23:25:01     DyingGasp
+3   2017-01-04 23:30:09    2017-01-05 11:08:53     DyingGasp
+4   2017-01-05 11:11:17    2017-01-08 08:12:27     DyingGasp
+5   2017-01-08 08:13:39    2017-01-10 10:42:57     LOS      –> physical problem
+6   2017-01-10 10:43:44    2017-01-11 00:25:41     DyingGasp
+7   2017-01-11 00:27:11    2017-03-09 11:46:17     DyingGasp
+8   2017-03-09 11:54:12    2017-03-15 18:53:03     DyingGasp
+9   2017-03-15 19:28:56    2017-03-29 01:29:10     DyingGasp
+10   2017-03-29 01:30:18    0000-00-00 00:00:00
+OL01#
+
+CHECKING ONT MAC ADDRESS
+OL01#sho mac gpon onu gpon-onu_1/4/1:2
+Total mac address : 2
+
+Mac address      Vlan   Type      Port                         Vc
+————————————————————————
+KEREN.KEREN.KEREN   212    Dynamic   gpon-onu_1/4/1:2          vport 1
+BEKEN.BEKEN.BEKEN   121    Dynamic   gpon-onu_1/4/1:2          vport 2
+OL01#
+
+CHECKING ONT POWER
+OL01#sho pon power attenuation gpon-onu_1/4/1:2
+OLT                  ONU              Attenuation
+————————————————————————–
+up      Rx :-19.153(dbm)      Tx:2.728(dbm)        21.881(dB)
+
+down    Tx :3.769(dbm)        Rx:-18.890(dbm)      22.659(dB)
+OL01#
+
+CHECKING ONT VERSION
+OL01#sho gpon remote-onu equip gpon-onu_1/4/1:2
+
+Vendor ID:           ZTEG
+Version:             V5.2
+SN:                  ABCDEFGHIJ
+Admin status:        unlock
+Battery backup:      false
+Security Mode:       aes
+Product code:        0
+TotalPrioQueueNum:   64
+TotalTrafficSchNum:  8
+TrafficMgmtOption:   priority-rate-controlled
+OperState:           enable
+EquipID:             F63.2 –> vERSION
+OMCC Version:        a0
+Security Capability: aes
+Model:               F6
+Survival time:       N/A
+TotalGemPortNum:     256
+SysUpTime:           0
+
+OL01#
+
+CHECKING ONT IP (ROUTING MODE)
+In This case, We used ip-host 1
+
+in one ONT we can create 4 IP-HOST management
+
+OL01#sho gpon remote-onu ip-host gpon-onu_1/4/1:2
+
+Host ID:            1
+HostName:           omci_ipv4_dhcp_1
+Identify:
+IP:                 0.0.0.0
+Mask:               0.0.0.0
+Gateway:            0.0.0.0
+Primary DNS:        0.0.0.0
+Second DNS:         0.0.0.0
+DHCP-enable:        true
+Ping-response:      true
+Traceroute-response:true
+MAC:                KEREN.KEREN.KEREN
+CurIP:              1.2.3.4
+CurMask:            255.255.255.0
+CurGateway:         1.2.3.4
+CurPriDNS:          6.6.6.6
+CurSecDNS:          7.7.7.7
+
+CHECKING ONT PORT STATUS
+OL01#sho gpon remote-onu interface eth gpon-onu_1/4/1:2
+
+Interface:     eth_0/1
+Speed status:  auto
+Operate status:disable
+Admin status:  unlock –> should be unlock
+Arc:           0
+Arc-interval   0
+Expect-type:   0
+Speed config:  auto
+Eth-loop:      disable
+Max-frame:     1632
+Pause-time:    0
+Wiring :       dce
+BridgeOrIP:    either
+PPPOE-filter:  disable
+Power-control: disable
+
+CHECKING ONT CONFIGURATION
+OL01#sho run int gpon-onu_1/4/1:2
+Building configuration…
+!
+interface gpon-onu_1/4/1:2
+descriptionIRONMAN
+tcont 1 profile share
+gemport 1 name ngenet unicast tcont 1 dir both
+gemport 1 traffic-limit downstream 300m
+gemport 2 name nontonfelm unicast tcont 1 dir both
+gemport 2 traffic-limit downstream 300m
+gemport 3 name tilpun unicast tcont 1 dir both
+gemport 3 traffic-limit downstream 300m
+switchport mode hybrid vport 1
+switchport vlan 212  tag vport 1
+switchport mode hybrid vport 2
+switchport vlan 121  tag vport 2
+switchport mode hybrid vport 3
+switchport vlan 122  tag vport 3
+!
+end
+
+OL01#sho onu run con gpon-onu_1/4/1:2
+pon-onu-mng gpon-onu_1/4/1:2
+flow 2 switch switch_0/1
+flow 3 switch switch_0/1
+flow mode 1 tag-filter vid-filter untag-filter discard
+flow mode 2 tag-filter vid-filter untag-filter discard
+flow mode 3 tag-filter vid-filter untag-filter discard
+flow 1 priority 0 vid 212
+flow 2 priority 0 vid 121
+flow 3 priority 0 vid 122
+gemport 1 flow 1
+gemport 2 flow 2
+gemport 3 flow 3
+switchport-bind switch_0/1 iphost 1
+ip-host 1 dhcp-enable true ping-response true traceroute-response true
+vlan-filter-mode iphost 1 tag-filter vid-filter untag-filter discard
+vlan-filter iphost 1 priority 0 vid 212
+vlan port eth_0/2 mode tag vlan 121
+vlan port eth_0/3 mode tag vlan 122
+dhcp-ip ethuni eth_0/2 from-internet –> bridging mode
+dhcp-ip ethuni eth_0/3 from-internet –> bridging mode
+!
+OL01#
+
+REBOOT ONT
+OL01#config t
+Enter configuration commands, one per line.  End with CTRL/Z.
+OL01(config)#pon-onu
+OL01(config)#pon-onu-mng gpon-onu_1/4/1:2
+OL01(gpon-onu-mng)#reboot
+
+RESET FACTORY ONT
+OL01#config t
+Enter configuration commands, one per line.  End with CTRL/Z.
+OL01(config)#pon-onu
+OL01(config)#pon-onu-mng gpon-onu_1/4/1:2
+OL01(gpon-onu-mng)#restore factory
+
+HOW TO LOCK / SHUTDOWN THIRD PORT ONT
+OL01#config t
+Enter configuration commands, one per line.  End with CTRL/Z.
+OL01(config)#pon-onu
+OL01(config)#pon-onu-mng gpon-onu_1/4/1:2
+OL01(gpon-onu-mng)#interface eth eth_0/3 state lock
+
+HOW TO UNLOCK PORT ONT
+OL01#config t
+Enter configuration commands, one per line.  End with CTRL/Z.
+OL01(config)#pon-onu
+OL01(config)#pon-onu-mng gpon-onu_1/4/1:2
+OL01(gpon-onu-mng)#interface eth eth_0/3 state unlock
+
+HOW TO RELEASE RENEW ONT AS DHCP CLIENT
+OL01#config t
+Enter configuration commands, one per line.  End with CTRL/Z.
+OL01(config)#pon-onu
+OL01(config)#pon-onu-mng gpon-onu_1/4/1:2
+OL01(gpon-onu-mng)#ip-host 1 dhcp-enable false ping-response false traceroute-response false
+
+OL01(gpon-onu-mng)#ip-host 1 dhcp-enable true ping-response true traceroute-response true
+
+CHECKING RX LEVEL FOR OLT UPLINK
+Make Sure , There is no CRC Counting at your Uplink Interface :p
+
+OL01#sho int optical-module-info xgei_1/21/1
+Optical module information:xgei_1/21/1
+Basic-info:
+Vendor-Name    : SOU          Vendor-Pn      : SPP1
+Vendor-Sn      : D9               Version-Lev    : 10
+Production-Date: 13                   Module-Type    : 10GBASE-LR
+Wavelength     : 1310      (nm)           Connector      : LC
+Diagnostic-info:
+RxPower        : -10.1(dbm)          TxPower      : -1.7(dbm)
+Bias-Current   : 25.724    (mA)           Laser-Rate   : 103(100Mb/s)
+Temperature    : 24.184    (c)            Supply-Vol   : 3.324(v)
+Alarm-thresh: –> Threshold
+RxPower-Upper    : 3  (dbm)               RxPower-Lower    : -34(dbm)
+TxPower-Upper    : 9  (dbm)               TxPower-Lower    : -14(dbm)
+Bias-Upper       : 131(mA)                Bias-Lower       : 0  (mA)
+Voltage-Upper    : 7  (v)                 Voltage-Lower    : 0  (v)
+Temperature-Upper: 90 (c)                 Temperature-Lower: -45(c)
+OL01#
+
+RESET SLOT
+OL01#reset-card slotno 12
+
+SWAP
+Use This for First Level Handling when you get Anomaly Process.
+
+sometimes it can help you, but sometime isn’t.
+
+OL01#swap
+
+CHECKING VLAN SUMMARY
+OL01#sho vlan sum
+All created vlan num: 3
+Details are following:
+111, 222 , 333
+OL01#
+
+OL01#sho vlan 111
+vlanid          :111
+name            :VLAN00111
+description     :N/A
+multicast-packet:flood-unknown
+tpid:0x8100
+port(untagged):
+port(tagged):
+gpon-onu_1/2/8:128:1
+xgei_1/22/1
+sg1
+OL01#
+
+If U want to Explore More about other, My advice is using “?” symbol.
+
+I Hope this article can help you sometime.
