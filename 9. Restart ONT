@@ -1,0 +1,5 @@
+OLT-ZTE_C320#config t
+Enter configuration commands, one per line.  End with CTRL/Z.
+OLT-ZTE_C320(config)#pon-onu
+OLT-ZTE_C320(config)#pon-onu-mng gpon-onu_1/2/5:5
+OLT-ZTE_C320(gpon-onu-mng)#reboot
