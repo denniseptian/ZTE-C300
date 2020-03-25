@@ -1,0 +1,16 @@
+OLT-ZTE_C320#show gpon remote-onu interface eth gpon-onu_1/2/5:5
+Interface:     eth_0/1
+Speed status:  full-100
+Operate status:enable
+Admin status:  unlock
+Arc:           0  
+Arc-interval   0
+Expect-type:   0
+Speed config:  auto
+Eth-loop:      disable
+Max-frame:     1632
+Pause-time:    0
+Wiring :       dce
+BridgeOrIP:    either
+PPPOE-filter:  disable
+Power-control: disable
