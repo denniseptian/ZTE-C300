@@ -1,0 +1,11 @@
+OLT-ZTE_C320#show pon power attenuation gpon-onu_1/2/5:4
+           OLT                  ONU              Attenuation
+--------------------------------------------------------------------------
+ up      Rx :no signal         Tx:N/A               N/A            
+ down    Tx :4.200(dbm)        Rx:N/A               N/A            
+
+OLT-ZTE_C320#show pon power attenuation gpon-onu_1/2/5:5
+           OLT                  ONU              Attenuation
+--------------------------------------------------------------------------
+ up      Rx :-20.850(dbm)      Tx:2.868(dbm)        23.718(dB)     
+ down    Tx :4.230(dbm)        Rx:-18.210(dbm)      22.440(dB) 
