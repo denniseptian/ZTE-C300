@@ -1,0 +1,7 @@
+JKT-OLT-RO#show onu running config gpon-onu_1/2/11:8
+pon-onu-mng gpon-onu_1/2/11:8
+  service Internet-Customer1 gemport 1 vlan 671
+  service OAM gemport 2 vlan 1450
+  service Internet-Customer2 gemport 3 vlan 1490
+  vlan port eth_0/1 mode tag vlan 671
+  vlan port eth_0/3 mode tag vlan 1490
