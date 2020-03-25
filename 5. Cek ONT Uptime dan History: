@@ -1,0 +1,36 @@
+OLT-ZTE_C320#show gpon onu detail-info gpon-onu_1/2/5:5
+ONU interface:         gpon-onu_1/2/5:5
+  Name:                Customer-2
+  Type:                ZTEG-F660
+  State:               ready
+  Admin state:         enable
+  Phase state:         working
+  Authentication mode: sn
+  SN Bind:             enable with SN check
+  Serial number:       ZTEGC1192DD7
+  Password:            
+  Device ID:           
+  Description:         Internet-Customer-2
+  Vport mode:          gemport
+  DBA Mode:            Hybrid
+  ONU Status:          enable
+  OMCI BW Profile:     enable
+  Line Profile:        N/A
+  Service Profile:     N/A             
+  Alarm Profile:       N/A
+  Performance Profile: N/A
+  ONU Distance:        3540m
+  Online Duration:     10h 42m 07s
+  FEC:                 none
+------------------------------------------
+       Authpass Time          OfflineTime             Cause
+   1   2018-07-28 04:49:02    2018-07-28 04:49:02     LOS      
+   2   2018-07-28 05:08:31    2018-07-28 05:08:32     LOS      
+   3   2018-07-28 05:13:42    2018-07-28 05:13:42     LOS      
+   4   2018-07-28 05:51:33    2018-07-28 05:51:33     LOS      
+   5   2018-07-28 07:23:11    2018-07-28 07:23:12     LOS      
+   6   2018-07-28 08:14:14    2018-07-28 08:14:14     LOS      
+   7   2018-07-29 11:28:39    2018-07-29 11:30:22     LOS      
+   8   2018-07-29 11:33:33    2018-07-29 11:34:36     LOS      
+   9   2018-07-29 11:36:01    2018-07-29 11:54:32     LOSi     
+  10   2018-07-29 11:56:31    0000-00-00 00:00:00     
