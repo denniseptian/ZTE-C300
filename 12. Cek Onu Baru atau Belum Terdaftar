@@ -1,0 +1,4 @@
+ZTE C300 # show gpon onu uncfg
+interface gpon-olt_1/9/1
+onu 1 type ZTE-F609 sn ZTEGX8X8X8X8
+exit
