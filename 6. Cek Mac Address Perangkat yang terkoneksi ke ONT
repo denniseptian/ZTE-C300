@@ -1,0 +1,7 @@
+OLT-ZTE_C320#show mac gpon onu gpon-onu_1/2/5:5
+Total mac address : 2
+
+Mac address      Vlan   Type      Port                         Vc
+------------------------------------------------------------------------
+6c3b.6b51.cc09   1402   Dynamic   gpon-onu_1/2/5:5          vport 1
+6c3b.6b61.d257   1402   Dynamic   gpon-onu_1/2/5:5          vport 1
