@@ -1,0 +1,13 @@
+OLT-ZTE_C320#show interface gpon-onu_1/2/5:4
+ONU statistic:
+   Input rate :               1471 Bps               12 pps
+   Output rate:               2212 Bps               13 pps
+   Input bandwidth throughput :0.0%    
+   Output bandwidth throughput: N/A    
+
+OLT-ZTE_C320#show interface gpon-onu_1/2/5:5
+ONU statistic:
+   Input rate :               1411 Bps                9 pps
+   Output rate:               1423 Bps                9 pps
+   Input bandwidth throughput :0.0%    
+   Output bandwidth throughput: N/A  
