@@ -1,0 +1,27 @@
+OLT-ZTE_C320#show run interface gpon-onu_1/2/5:4
+Building configuration...
+!
+interface gpon-onu_1/2/5:4
+  name Customer-1
+  description Internet-Customer-1
+  tcont 1 name acsata profile UP-50M
+  gemport 1 name Internet unicast tcont 1 dir both
+  gemport 1 traffic-limit upstream DOWN-50M downstream DOWN-50M
+  switchport mode hybrid vport 1
+  service-port 1 vport 1 user-vlan 1247 vlan 1247 svlan 1402
+!
+end
+OLT-ZTE_C320#show run interface gpon-onu_1/2/5:5
+Building configuration...
+!
+interface gpon-onu_1/2/5:5
+  name Customer-2
+  description Internet-Customer-2
+  tcont 1 name acsata profile UP-60M
+  tcont 1 gap mode2
+  gemport 1 name Internet unicast tcont 1 dir both
+  gemport 1 traffic-limit upstream DOWN-60M downstream DOWN-60M
+  switchport mode hybrid vport 1
+  service-port 1 vport 1 user-vlan 1245 vlan 1245 svlan 1402
+!
+end
