@@ -8,7 +8,7 @@ interface gpon-onu_INTERFACE_GPON_ONU
   sn-bind enable sn
   tcont 1 name HSI profile UPBE2M
   gemport 1 name HSI unicast tcont 1 dir both
-  gemport 1 traffic-limit upstream UP624K downstream DW2M
+  gemport 1 traffic-limit upstream UP500K downstream DW2M
   switchport mode hybrid vport 1
   service-port 1 vport 1 user-vlan 1200 vlan 1200
   pppoe-plus enable sport 1
