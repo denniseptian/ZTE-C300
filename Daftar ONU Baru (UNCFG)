@@ -1,0 +1,5 @@
+## cek onu belum terdaftar
+ZTE C300 # show gpon onu uncfg
+interface gpon-olt_1/9/1
+  onu ONU_NUMBER(1-128) type ZTE-F609 sn ONU_SERIAL
+exit
