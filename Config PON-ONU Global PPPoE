@@ -1,0 +1,15 @@
+# config onu
+pon-onu-mng gpon-onu_INTERFACE_ONU
+  service HSI type internet gemport 1 cos 0 vlan 1200
+  wan-ip 1 mode pppoe username PPPoE_USERNAME password PPPoeE_PASSWORD vlan-profile PPPoE host 1
+  wan-ip 1 ping-response enable traceroute-response enable
+  interface wifi wifi_0/1 state unlock
+  interface wifi wifi_0/4 state lock
+  wifi enable channel 1
+  ssid auth wep wifi_0/1 open-system
+  ssid auth wep wifi_0/2 open-system
+  ssid auth wep wifi_0/3 open-system
+  ssid auth wep wifi_0/4 open-system
+  wan 1 ethuni 1,2,3 ssid 1 service internet host 1
+  dhcp-ip ethuni eth_0/4 from-internet
+exit
