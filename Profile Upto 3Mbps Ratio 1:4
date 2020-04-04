@@ -1,6 +1,6 @@
 #Registrasi Onu dengan bandwith Ratio up to dw 1:4
 #Profile TCON 4 (BEST-EFFORT CD 'UPBE')
-#Profile Bandwith 2Mbps
+#Profile Bandwith 3Mbps
 
 interface gpon-onu_INTERFACE_GPON_ONU
   name ID_PELANGGAN
