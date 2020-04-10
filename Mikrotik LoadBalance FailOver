@@ -1,0 +1,58 @@
+MikroTik dengan interface jaringan minimal 3 buah:
+
+interface pertama (ether1-wan1) terhubung ke ISP A (IP address 192.168.102.2; Gateway: 192.168.102.1)
+interface kedua (ether2-wan2) terhubung ke ISP B (IP address 192.168.230.2; Gateway: 192.168.230.1)
+interface ketiga (ether3-lan) terhubung ke jaringan LAN (IP address 172.16.2.1)
+Berikutnya langkah konfigurasi di router MikroTik:
+
+Set alamat IP untuk semua interface
+
+/ip address
+add address=192.168.102.2/24 interface=ether1-wan1 comment="WAN ISP A"
+add address=192.168.230.2/24 interface=ether2-wan2 comment="WAN ISP B"
+add address=172.16.2.1/24 interface=ether3-lan comment="LAN"
+Buat mangle pada firewall di MikroTik untuk menandai traffic dari ISP A dan ISP B
+
+/ip firewall mangle
+add chain=input in-interface=ether1-wan1 action=mark-connection new-connection-mark=traffic-wan1
+add chain=input in-interface=ether2-wan2 action=mark-connection new-connection-mark=traffic-wan2
+
+Selanjutnya kita membuat mangle untuk menandai traffic yang keluar agar dapat dialihkan ke masing-masing gateway ISP
+
+add chain=output connection-mark=traffic-wan1 action=mark-routing new-routing-mark=to-wan1
+add chain=output connection-mark=traffic-wan2 action=mark-routing new-routing-mark=to-wan2
+
+Selanjutnya kita buat rule untuk mengijinkan traffic yang datang dari LAN ketika mengakses ke WAN (internet)
+
+add chain=prerouting dst-address=192.168.102.0/24 action=accept in-interface=ether3-lan
+add chain=prerouting dst-address=192.168.230.0/24 action=accept in-interface=ether3-lan
+
+Kemudian kita buat konfigurasi untuk PCC. Karena pada chain prerouting semua traffic akan ditangkap, maka kita tambahkan dst-address-type=!local agar traffic dari LAN yang menuju ke alamat IP pada ethernet router akan dihiraukan. Sisanya traffic yang melewati router itu sendiri akan di kelompokan menjadi 2 grup berdasarkan source, port dan destination.
+
+add chain=prerouting dst-address-type=!local in-interface=ether3-lan per-connection-classifier=both-addresses­-and-ports:2/0 action=mark-connection new-
+connection-mark=traffic-wan1 passthrough=yes
+add chain=prerouting dst-address-type=!local in-interface=ether3-lan per-connection-classifier=both-addresses­-and-ports:2/1 action=mark-connection new-
+connection-mark=traffic-wan2 passthrough=yes
+
+Kemudian buat rule untuk menentukan paket data yang keluar dan masuk agar melalui gateway yang sesuai.
+
+add chain=prerouting connection-mark=traffic-wan1 in-interface=ether3-lan action=mark-routing new-routing-mark=to-wan1
+add chain=prerouting connection-mark=traffic-wan2 in-interface=ether3-lan action=mark-routing new-routing-mark=to-wan2
+
+Selanjutnya buat rule untuk routing ke semua ISP.
+
+/ip route
+add dst-address=0.0.0.0/0 gateway=192.168.102.1 routing-mark=to-wan1 check-gateway=ping
+add dst-address=0.0.0.0/0 gateway=192.168.230.1 routing-mark=to-wan2 check-gateway=ping
+Kemudian kita berikan konfigurasi untuk failover.
+add dst-address=0.0.0.0/0 gateway=192.168.102.1 distance=1 check-gateway=ping
+add dst-address=0.0.0.0/0 gateway=192.168.230.1 distance=2 check-gateway=ping
+
+Langkah yang terakhir kita tambahkan setting masquerade NAT pada firewall untuk menentukan interface yang digunakan untuk akses keluar WAN.
+
+/ip firewall nat
+add chain=srcnat out-interface=ether1-wan1 action=masquerade
+add chain=srcnat out-interface=ether2-wan2 action=masquerade
+ 
+
+Demikian tadi konfigurasi load balancing sekaligus failover. Jika konfigurasi berjalan dengan baik maka ketika koneksi salah satu ISP down (ping ke salah satu gateway ISP time-out) maka koneksi tidak internet tidak akan terputus karena masih dapat dialirkan melalui link yang satunya. Kemudian proses download juga bisa lebih cepat selesai karena semua jalur koneksi internet akan digunakan.
