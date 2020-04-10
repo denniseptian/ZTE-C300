@@ -1,0 +1,4 @@
+#enable
+security-mng 2 ingress-type wan mode permit state enable protocol web
+#disable
+security-mng 2 ingress-type wan mode permit state disable protocol web
