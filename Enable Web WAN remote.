@@ -1,3 +1,6 @@
+conf t
+pon-onu-mng gpon_"TARGET INTERFACE"
+
 #enable
 security-mng 2 ingress-type wan mode permit state enable protocol web
 #disable
