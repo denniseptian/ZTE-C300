@@ -6,9 +6,9 @@ interface gpon-onu_INTERFACE_GPON_ONU
   name ID_PELANGGAN
   description DESCRIPTION_PELLANGGAN
   sn-bind enable sn
-  tcont 1 name HSI profile UPBE10M
-  gemport 1 name HSI unicast tcont 1 dir both
-  gemport 1 traffic-limit upstream UP10M downstream DW10M
+  tcont 1 profile default-jdnhome
+  gemport 1 unicast tcont 1 
+  gemport 1 traffic-limit upstream 10M downstream 10M
   switchport mode hybrid vport 1
   service-port 1 vport 1 user-vlan 1200 vlan 1200
   pppoe-plus enable sport 1
