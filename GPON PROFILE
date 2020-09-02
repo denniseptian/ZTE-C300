@@ -1,10 +1,10 @@
 #Registrasi Onu dengan bandwith Ratio up to dw 1:1
 #Profile TCON 4 (BEST-EFFORT CD 'UPBE')
-#Profile Bandwith 10Mbps
+#Profile Bandwith ex:10Mbps
 
 interface gpon-onu_INTERFACE_GPON_ONU
   name ID_PELANGGAN
-  description DESCRIPTION_PELLANGGAN
+  description KODE_ODP
   sn-bind enable sn
   tcont 1 profile default-jdnhome
   gemport 1 unicast tcont 1 
