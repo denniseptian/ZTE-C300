@@ -14,3 +14,10 @@ interface gpon-onu_INTERFACE_GPON_ONU
   pppoe-plus enable sport 1
   pppoe-plus trust true replace sport 1
 exit
+
+pon-onu-mng gpon-onu_INTERFACE_ONU
+  service HSI type internet gemport 1 cos 0 vlan 1200
+  wan-ip 1 mode pppoe username PPPoE_USERNAME password PPPoeE_PASSWORD vlan-profile PPPoE host 1
+  wan-ip 1 ping-response enable traceroute-response enable
+  wan 1 ethuni 1,2,3 ssid 1 service internet host 1
+exit
