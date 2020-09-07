@@ -1,0 +1,5 @@
+GPON00-D-KL(config)#inte
+GPON00-D-KL(config)#interface gp
+GPON00-D-KL(config)#interface gpon-on
+GPON00-D-KL(config)#interface gpon-onu_0/10/4:1
+GPON00-D-KL(config-if)#registration-method sn  ZTEGXxXxX
