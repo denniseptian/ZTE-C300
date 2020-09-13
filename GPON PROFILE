@@ -18,6 +18,7 @@ exit
 pon-onu-mng gpon-onu_INTERFACE_ONU
   service jdnhome-broadband type internet gemport 1 cos 0 vlan 1200
   wan-ip 1 mode pppoe username PPPoE_USERNAME password PPPoeE_PASSWORD vlan-profile PPPoE host 1
+  security-mng 2 ingress-type wan mode permit state enable protocol web
   wan-ip 1 ping-response enable traceroute-response enable
   wan 1 ethuni 1,2,3 ssid 1 service internet host 1
 exit
