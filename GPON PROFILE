@@ -1,24 +1,31 @@
 #Registrasi Onu dengan bandwith Ratio up to dw 1:1
 #Profile TCON 4 (BEST-EFFORT CD 'UPBE')
-#Profile Bandwith ex:10Mbps
+#Profile Bandwith ex:XMbps
 
 interface gpon-onu_INTERFACE_GPON_ONU
   name ID_PELANGGAN
   description KODE_ODP
   sn-bind enable sn
-  tcont 1 profile default-jdnhome
+  tcont 1 TR-069 profile tr069
+  tcont 2 INTERNET profile UP-XM
   gemport 1 unicast tcont 1 
-  gemport 1 traffic-limit upstream 10M downstream 10M
+  gemport 1 traffic-limit upstream 1M downstream 1M
+  gemport 2 unicast tcont 2
+  gemport 2 traffic-limit upstream XM downstream XM
   switchport mode hybrid vport 1
+  switchport mode hybrid vport 2
   service-port 1 vport 1 user-vlan 1200 vlan 1200
-  pppoe-plus enable sport 1
-  pppoe-plus trust true replace sport 1
+  service-port 2 vport 2 user-vlan 100 vlan 100
+  pppoe-plus enable sport 2
+  pppoe-plus trust true replace sport 2
 exit
 
 pon-onu-mng gpon-onu_INTERFACE_ONU
-  service jdnhome-broadband type internet gemport 1 cos 0 vlan 1200
-  wan-ip 1 mode pppoe username PPPoE_USERNAME password PPPoeE_PASSWORD vlan-profile PPPoE host 1
+  service TR-069 type hybrid gemport 1 cos 0 vlan 100
+  service INTERNET type internet gemport 2 cos 0 vlan 1200
+  tr069-mgmt 1 acs http://acs.net.proxindo.id:7547 validate basic username admin password admin
+  wan-ip 1 mode pppoe username (PPPoE_USERNAME) password (PPPoeE_PASSWORD) vlan-profile PPPoE host 2
   security-mng 2 ingress-type wan mode permit state enable protocol web
   wan-ip 1 ping-response enable traceroute-response enable
-  wan 1 ethuni 1,2,3 ssid 1 service internet host 1
+  wan 1 ethuni 2,3 ssid 1 service internet host 2
 exit
