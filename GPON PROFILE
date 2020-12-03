@@ -21,8 +21,8 @@ interface gpon-onu_INTERFACE_GPON_ONU
 exit
 
 pon-onu-mng gpon-onu_INTERFACE_ONU
-  service TR-069 type hybrid gemport 1 cos 0 vlan 100
-  service INTERNET type internet gemport 2 cos 0 vlan 1200
+  service TR-069 gemport 1 cos 0 vlan 100
+  service INTERNET gemport 2 cos 0 vlan 1200
   tr069-mgmt 1 acs http://acs.net.proxindo.id:7547 validate basic username admin password admin
   wan-ip 1 mode pppoe username (PPPoE_USERNAME) password (PPPoeE_PASSWORD) vlan-profile PPPoE host 2
   security-mng 2 ingress-type wan mode permit state enable protocol web
