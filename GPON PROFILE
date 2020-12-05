@@ -6,7 +6,7 @@ interface gpon-onu_INTERFACE_GPON_ONU
   name ID_PELANGGAN
   description KODE_ODP
   sn-bind enable sn
-  tcont 1 TR-069 profile tr069
+  tcont 1 TR069 profile tr069
   tcont 2 INTERNET profile UP-XM
   gemport 1 unicast tcont 1 
   gemport 1 traffic-limit upstream 1M downstream 1M
@@ -16,16 +16,14 @@ interface gpon-onu_INTERFACE_GPON_ONU
   switchport mode hybrid vport 2
   service-port 1 vport 1 user-vlan 1200 vlan 1200
   service-port 2 vport 2 user-vlan 100 vlan 100
-  pppoe-plus enable sport 2
-  pppoe-plus trust true replace sport 2
 exit
 
 pon-onu-mng gpon-onu_INTERFACE_ONU
-  service TR-069 gemport 1 cos 0 vlan 100
+  service TR069 gemport 1 cos 0 vlan 100
   service INTERNET gemport 2 cos 0 vlan 1200
   tr069-mgmt 1 acs http://acs.net.proxindo.id:7547 validate basic username admin password admin
-  wan-ip 1 mode pppoe username (PPPoE_USERNAME) password (PPPoeE_PASSWORD) vlan-profile PPPoE host 2
+  wan-ip 1 mode pppoe username (PPPoE_USERNAME) password (PPPoeE_PASSWORD) vlan-profile PPPoE host 1
   security-mng 2 ingress-type wan mode permit state enable protocol web
   wan-ip 1 ping-response enable traceroute-response enable
-  wan 1 ethuni 2,3 ssid 1 service internet host 2
+  wan 1 ethuni 2,3 ssid 1 service internet host 1
 exit
