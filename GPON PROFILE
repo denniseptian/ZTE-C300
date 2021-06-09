@@ -1,29 +1,33 @@
 #Registrasi Onu dengan bandwith Ratio up to dw 1:1
-#Profile TCON 4 (BEST-EFFORT CD 'UPBE')
-#Profile Bandwith ex:XMbps
+#Profile TCON ALL (MIXED)
+#Profile Bandwith 10:XMbps
+#UPDATE 09-jun-2021
 
 interface gpon-onu_INTERFACE_GPON_ONU
-  name ID_PELANGGAN
-  description KODE_ODP
-  sn-bind enable sn
-  tcont 1 TR069 profile tr069
-  tcont 2 INTERNET profile UP-XM
-  gemport 1 unicast tcont 1 
-  gemport 1 traffic-limit upstream 1M downstream 1M
-  gemport 2 unicast tcont 2
-  gemport 2 traffic-limit upstream XM downstream XM
+  name JDN_[IDPEL]_[NAMAPEL]
+  description zone_btu_junrejo_torongrejo_descr_Jl._aji_mustofa\&_[PHONENUMBER]_extid_[GPONSN]_authd_20210605
+  tcont 1 profile SMARTOLT-10M-UP
+  gemport 1 unicast tcont 1 dir both
+  gemport 1 traffic-limit downstream SMARTOLT-10M-DOWN
   switchport mode hybrid vport 1
-  switchport mode hybrid vport 2
-  service-port 1 vport 1 user-vlan 1200 vlan 1200
-  service-port 2 vport 2 user-vlan 100 vlan 100
-exit
+  switchport vlan 1200  tag vport 1
+!
 
 pon-onu-mng gpon-onu_INTERFACE_ONU
-  service TR069 gemport 1 cos 0 vlan 100
-  service INTERNET gemport 2 cos 0 vlan 1200
-  tr069-mgmt 1 acs http://acs.net.proxindo.id:7547 validate basic username admin password admin
-  wan-ip 1 mode pppoe username (PPPoE_USERNAME) password (PPPoeE_PASSWORD) vlan-profile PPPoE host 1
-  security-mng 2 ingress-type wan mode permit state enable protocol web
-  wan-ip 1 ping-response enable traceroute-response enable
-  wan 1 ethuni 2,3 ssid 1 service internet host 1
-exit
+  flow mode 1 tag-filter vid-filter untag-filter discard
+  flow 1 priority 0 vid 1200
+  gemport 1 flow 1
+  switchport-bind switch_0/1 iphost 1
+  switchport-bind switch_0/1 veip 1
+  pppoe 1 nat enable user [PPPOEUSERNAME] password [PPPOEPASSWORD]
+  vlan-filter-mode iphost 1 tag-filter vid-filter untag-filter discard
+  vlan-filter iphost 1 priority 0 vid 1200
+  dhcp-ip ethuni eth_0/1 from-onu
+  dhcp-ip ethuni eth_0/2 from-onu
+  dhcp-ip ethuni eth_0/3 from-onu
+  dhcp-ip ethuni eth_0/4 from-onu
+  security-mng 1 state enable mode permit protocol web https
+  security-mng 1 start-src-ip 10.115.0.1 end-src-ip 10.115.0.255
+  security-mng 998 state enable mode permit ingress-type lan protocol web https
+  security-mng 999 state enable ingress-type lan protocol ftp telnet ssh snmp tr069
+!
